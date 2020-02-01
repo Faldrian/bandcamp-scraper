@@ -8,8 +8,16 @@
 class BandcampPipeline(object):
 
     def process_item(self, item, spider):
-        license = 0 if ("all rights reserved" in item['license'][0]) else 1
-        license_url = item['license_url'][0] if license == 1 else None
+        license_url = None
+
+        if ("all rights reserved" in item['license'][0]):
+            license = 0  # Commercial
+        else:
+            if ('license_url' in item):
+                license = 1  # One license for the whole album
+                license_url = item['license_url'][0]
+            else:
+                license = 2  # Individual licenses per track
 
         title = item['title'][0].strip()
         artist = item['artist'][0].strip()
