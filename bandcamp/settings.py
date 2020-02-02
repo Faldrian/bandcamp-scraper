@@ -95,5 +95,5 @@ DEPTH_PRIORITY = 1
 SCHEDULER_DISK_QUEUE = 'scrapy.squeues.PickleFifoDiskQueue'
 SCHEDULER_MEMORY_QUEUE = 'scrapy.squeues.FifoMemoryQueue'
 
-
-SQLITE_FILE = 'albumdata.db'
+# Less noise in logs
+LOG_LEVEL = 'INFO'
