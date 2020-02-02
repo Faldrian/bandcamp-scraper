@@ -12,9 +12,8 @@ class Album(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
 
-    album_url= scrapy.Field()
-    title = scrapy.Field()
-    artist = scrapy.Field()
+    album_url = scrapy.Field()
     license = scrapy.Field()
     license_url = scrapy.Field()
     numsongs = scrapy.Field()
+    album_json = scrapy.Field()
