@@ -5,7 +5,16 @@ This Scrapy project should help to find albums with creative-commons license.
 ## Features (implemented)
 
  - spiders through a music tag until a given number of new CC albums are found
- - stores results in a sqlite database (CC and non-CC albums, to make future spidering faster and put less load on bandcamp servers)
+ - stores all crawled albums in a couchdb database
+ - includes all track information (length, mp3-url, license per track)
+
+## Setup
+
+1. Install scrapy ( https://docs.scrapy.org/en/latest/intro/install.html )
+2. Install couchdb ( https://docs.couchdb.org/en/stable/install/index.html )
+   (Currently a local database on default port is assumed)
+3. Adjust tag to crawl (currently: Edit `bandcamp/spiders/tags.py` and change variable "tag", will be moved to command line argument)
+4. Start crawler in base directory: `scrapy crawl tags`
 
 ## Wishlist
 
@@ -18,14 +27,11 @@ You can mark an album as "Done"
 
 You can export a formattet metadata-string for the album, including title, artist and license (so I can use it for shownotes or as reference when giving CC-credits).
 
-
-### Use a document based database
-Currently much of the crawled data is just dropped.
-I need to use a document based database to just store the whole JSON-Object when crawling the list of albums.
-When crawling the detail page of the album, I will add some fields with the additional data.
-When the user marks the album as "Done", it is modified again.
+Maybe build something quick using angular ... or even a more specialized toolbox which has some more data-view related features.
 
 
-### Investigate individual tracks
-Some albums have mixed licenses on their tracks, some are CC and some not.
-The crawler should go an additional step and also get the tracks and their licenses and list them in the document.
+### Better Configuration
+Adjustable:
+
+- which tag to crawl?
+- how many new CC-Albums should be found until terminating?
