@@ -1,0 +1,40 @@
+<div id="main">
+  <div id="main-search">
+    <h1>Suchen</h1>
+      <table mat-table [dataSource]="albums" class="mat-elevation-z8">
+        <!--- Note that these columns can be defined in any order.
+      The actual rendered columns are set as a property on the row definition" -->
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="artist">
+          <th mat-header-cell *matHeaderCellDef> Artist </th>
+          <td mat-cell *matCellDef="let element"> {{element.artist}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef> Title </th>
+          <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="numsongs">
+          <th mat-header-cell *matHeaderCellDef> # Songs </th>
+          <td mat-cell *matCellDef="let element"> {{element.numsongs}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="license">
+          <th mat-header-cell *matHeaderCellDef> License </th>
+          <td mat-cell *matCellDef="let element"> {{element.license}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+  </div>
+  <div id="main-details">
+    detailansicht
+  </div>
+  <iframe id="main-iframe" src="" width="" height=""></iframe>
+</div>

@@ -16,6 +16,11 @@ This Scrapy project should help to find albums with creative-commons license.
 3. Adjust tag to crawl (currently: Edit `bandcamp/spiders/tags.py` and change variable "tag", will be moved to command line argument)
 4. Start crawler in base directory: `scrapy crawl tags`
 
+## Setup Frontend
+
+1. Enable CORS in couchdb
+2. Start frontend with `ng serve`
+
 ## Wishlist
 
 I will implement this...
