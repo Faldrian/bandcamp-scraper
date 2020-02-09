@@ -1,40 +1,48 @@
 <div id="main">
   <div id="main-search">
-    <h1>Suchen</h1>
-      <table mat-table [dataSource]="albums" class="mat-elevation-z8">
-        <!--- Note that these columns can be defined in any order.
-      The actual rendered columns are set as a property on the row definition" -->
+    <div class="filterbar">
+        <mat-checkbox>blaaa</mat-checkbox>
+    </div>
 
-        <!-- Position Column -->
-        <ng-container matColumnDef="artist">
-          <th mat-header-cell *matHeaderCellDef> Artist </th>
-          <td mat-cell *matCellDef="let element"> {{element.artist}} </td>
-        </ng-container>
+    <table mat-table [dataSource]="albums" class="albumtable">
+      <ng-container matColumnDef="artist">
+        <th mat-header-cell *matHeaderCellDef> Artist </th>
+        <td mat-cell *matCellDef="let doc"> {{doc.album_json.artist}} </td>
+      </ng-container>
 
-        <!-- Name Column -->
-        <ng-container matColumnDef="title">
-          <th mat-header-cell *matHeaderCellDef> Title </th>
-          <td mat-cell *matCellDef="let element"> {{element.title}} </td>
-        </ng-container>
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef> Title </th>
+        <td mat-cell *matCellDef="let doc"> {{doc.album_json.title}} </td>
+      </ng-container>
 
-        <!-- Weight Column -->
-        <ng-container matColumnDef="numsongs">
-          <th mat-header-cell *matHeaderCellDef> # Songs </th>
-          <td mat-cell *matCellDef="let element"> {{element.numsongs}} </td>
-        </ng-container>
+      <ng-container matColumnDef="numsongs">
+        <th mat-header-cell *matHeaderCellDef> # Songs </th>
+        <td mat-cell *matCellDef="let doc"> {{doc.numsongs}} </td>
+      </ng-container>
 
-        <!-- Symbol Column -->
-        <ng-container matColumnDef="license">
-          <th mat-header-cell *matHeaderCellDef> License </th>
-          <td mat-cell *matCellDef="let element"> {{element.license}} </td>
-        </ng-container>
+      <ng-container matColumnDef="license">
+        <th mat-header-cell *matHeaderCellDef> License </th>
+        <td mat-cell *matCellDef="let doc"> {{doc.license}} </td>
+      </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
+      <ng-container matColumnDef="crawltime">
+        <th mat-header-cell *matHeaderCellDef> im Index </th>
+        <td mat-cell *matCellDef="let doc"> {{doc.crawltime | date:'dd.MM.yyyy' }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="albumdate">
+        <th mat-header-cell *matHeaderCellDef> Release </th>
+        <td mat-cell *matCellDef="let doc"> {{doc.tracks_json.album_release_date | date:'dd.MM.yyyy' }} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="rowClicked(row)"></tr>
+    </table>
   </div>
   <div id="main-details">
-    detailansicht
+    <ul *ngIf="selectedAlbum != undefined">
+      <li *ngFor="let track of selectedAlbum.tracks_json.trackinfo"> {{track.title}} - {{track.duration}}</li>
+    </ul>
   </div>
   <iframe id="main-iframe" src="" width="" height=""></iframe>
 </div>

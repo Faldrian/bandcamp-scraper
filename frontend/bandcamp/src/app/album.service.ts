@@ -2,40 +2,44 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
-import { Albumdata } from './albumdata';
+import { Albumfilter } from './albumfilter';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AlbumService {
-  urlAll = "http://127.0.0.1:5984/album/_all_docs?include_docs=true"
+  urlAll = "http://127.0.0.1:5984/album/_find?include_docs=true"
 
   constructor(private http: HttpClient) { }
 
-  findAlbums() {
+  findAlbums(albumfilter: Albumfilter) {
     // all albums
-    return this.http.get(this.urlAll).pipe(map(data => {
+    return this.http.post(
+      this.urlAll,
+      this.prepareFilter(albumfilter)
+    ).pipe(map(data => {
 
-      // map every album of the result list to an Albumdata object
-      return data['rows'].map((row: any) => {
-          return this.parseAlbum(row['doc']);
-      });
+      // only return docs
+      return data['docs'];
 
     }));
   }
 
-  private parseAlbum(doc: any) {
-    let album: Albumdata = {
-      _id: doc._id,
-      _rev: doc._rev,
-      album_url: doc.album_url,
-      artist: doc.album_json.artist,
-      title: doc.album_json.title,
-      license: doc.license,
-      numsongs: doc.numsongs,
-      tags: doc.tags
-    }
+  private prepareFilter(albumfilter: Albumfilter) {
+    let filters = {};
 
-    return album;
+    // only CC music
+    filters['license'] = {'$gt': 0};
+
+    if(albumfilter.artist)
+      filters['album_json.artist'] = {'$regex': '.*' + albumfilter.artist + '.*'};
+
+    if(albumfilter.title)
+      filters['album_json.title'] = {'$regex': '.*' + albumfilter.title + '.*'};
+
+    if(albumfilter.tag)
+      filters['tags.' + albumfilter.tag] = {'$exists': true};
+
+    return {selector: filters};
   }
 }

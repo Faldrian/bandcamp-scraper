@@ -21,11 +21,14 @@ class BandcampPipeline(object):
             else:
                 license = 2  # Individual licenses per track
 
+        # Expand tags to dict, so we can filter by "$exists" later
+        tags = {i: True for i in item['tags']}
+
         spider.albumdb.save({
             'album_url': item['album_url'][0],
             'license': license,
             'license_url': license_url,
-            'tags': item['tags'],
+            'tags': tags,
             'numsongs': item['numsongs'][0],
             'album_json': item['album_json'][0],
             'tracks_json': item['tracks_json'][0],

@@ -53,7 +53,7 @@ class TagSpider(scrapy.Spider):
             else:
                 logging.info("Skipping known Album: %s", album_url)
 
-        if(more_available and page < 1):
+        if(more_available and page < 4):
             logging.info("More available, loading next page: %d.", (page + 1))
             yield self.create_hub_request(tag, page + 1)
         else:

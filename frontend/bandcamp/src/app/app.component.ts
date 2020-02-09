@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AlbumService } from './album.service';
-import { Albumdata } from './albumdata';
+import { Albumfilter } from './albumfilter';
 
 @Component({
   selector: 'app-root',
@@ -9,14 +9,29 @@ import { Albumdata } from './albumdata';
 })
 export class AppComponent implements OnInit {
   title = 'bandcamp';
-  displayedColumns: string[] = ['artist', 'title', 'numsongs', 'license'];
-  albums: Albumdata[];
+  displayedColumns: string[] = [
+    'artist', 'title', 'numsongs', 'license', 'crawltime', 'albumdate'
+  ];
+  albums: any[];
+  selectedAlbum: any = undefined;
+
+  albumfilter: Albumfilter = {
+    artist: undefined,
+    tag: undefined,
+    title: undefined
+   };
 
   constructor(private albumService: AlbumService) { }
 
   ngOnInit() {
-    this.albumService.findAlbums().subscribe((data: Albumdata[]) => {
+
+
+    this.albumService.findAlbums(this.albumfilter).subscribe((data: any[]) => {
       this.albums = data;
     });
+  }
+
+  rowClicked(row) {
+    this.selectedAlbum = row;
   }
 }

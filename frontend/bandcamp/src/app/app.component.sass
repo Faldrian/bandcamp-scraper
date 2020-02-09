@@ -1,13 +1,19 @@
 #main
-  display: flex
+  display: grid
+  grid-template-columns: 50em 20em auto
+  grid-template-areas: "search details iframe"
   height: 100%
 
 #main-search
-  width: 40%
+  grid-area: search
+  overflow-y: scroll
 
 #main-details
-  width: 20%
+  grid-area: details
+
+.albumtable
+  width: 100%
 
 #main-iframe
-  width: 40%
   border: 0
+  grid-area: iframe
