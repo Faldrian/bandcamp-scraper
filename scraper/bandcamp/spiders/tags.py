@@ -17,6 +17,8 @@ class TagSpider(scrapy.Spider):
     def start_requests(self):
         # First thing: connect to database
         # (can't be done in constructor, because self.settings is set later)
+        # If the below does not work out-of-the-box, use this format: 
+        # couch = couchdb.Server('http://username:password@host:port/')
         couch = couchdb.Server()
 
         # create or use existing database
